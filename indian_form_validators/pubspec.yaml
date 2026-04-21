@@ -4,7 +4,7 @@ description: >
   financial and identity form fields — PAN, Aadhaar, IFSC, GST, UPI,
   mobile numbers, and pincodes. Includes Verhoeff checksum for Aadhaar.
 version: 1.0.0
-homepage: https://github.com/yourusername/indian_form_validators
+homepage: https://github.com/Viraj2611/indian_form_validators
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
