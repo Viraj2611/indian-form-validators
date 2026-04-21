@@ -28,8 +28,10 @@ void main() {
     });
 
     test('invalid format returns error', () {
-      expect(PanValidator.validate('1BCDE1234F'), isNotNull); // starts with digit
-      expect(PanValidator.validate('ABCDE123FF'), isNotNull); // two letters at end
+      expect(
+          PanValidator.validate('1BCDE1234F'), isNotNull); // starts with digit
+      expect(
+          PanValidator.validate('ABCDE123FF'), isNotNull); // two letters at end
       expect(PanValidator.validate('ABCDE1234@'), isNotNull); // special char
     });
 
@@ -39,10 +41,14 @@ void main() {
     });
 
     test('getTaxpayerType returns correct type', () {
-      // 4th character (index 3) is 'P' → Individual
-      expect(PanValidator.getTaxpayerType('AABCP1234D'), equals('Individual (Person)'));
-      // 4th character is 'C' → Company
-      expect(PanValidator.getTaxpayerType('AABCC1234D'), equals('Company'));
+      // A A A [P] A 1 2 3 4 C → index 3 = 'P' → Individual (Person)
+      expect(PanValidator.getTaxpayerType('AAAPA1234C'),
+          equals('Individual (Person)'));
+      // A A A [C] A 1 2 3 4 C → index 3 = 'C' → Company
+      expect(PanValidator.getTaxpayerType('AAACA1234C'), equals('Company'));
+      // A A A [H] A 1 2 3 4 C → index 3 = 'H' → HUF
+      expect(PanValidator.getTaxpayerType('AAAHA1234C'),
+          equals('Hindu Undivided Family (HUF)'));
     });
 
     test('getTaxpayerType returns null for invalid PAN', () {
@@ -71,8 +77,9 @@ void main() {
     });
 
     test('wrong length returns error', () {
-      expect(AadhaarValidator.validate('12345678901'), isNotNull);   // 11 digits
-      expect(AadhaarValidator.validate('1234567890123'), isNotNull); // 13 digits
+      expect(AadhaarValidator.validate('12345678901'), isNotNull); // 11 digits
+      expect(
+          AadhaarValidator.validate('1234567890123'), isNotNull); // 13 digits
     });
 
     test('starting with 0 or 1 returns error', () {
@@ -136,7 +143,7 @@ void main() {
     });
 
     test('wrong length returns error', () {
-      expect(MobileValidator.validate('987654321'), isNotNull);   // 9 digits
+      expect(MobileValidator.validate('987654321'), isNotNull); // 9 digits
       expect(MobileValidator.validate('98765432101'), isNotNull); // 11 digits
     });
 
@@ -171,12 +178,13 @@ void main() {
     });
 
     test('wrong length returns error', () {
-      expect(GstValidator.validate('27AAPFU0939F1Z'), isNotNull);   // 14 chars
+      expect(GstValidator.validate('27AAPFU0939F1Z'), isNotNull); // 14 chars
       expect(GstValidator.validate('27AAPFU0939F1ZVX'), isNotNull); // 16 chars
     });
 
     test('invalid state code returns error', () {
-      expect(GstValidator.validate('99AAPFU0939F1ZV'), isNotNull); // 99 is other territory
+      expect(GstValidator.validate('99AAPFU0939F1ZV'),
+          isNotNull); // 99 is other territory
     });
 
     test('isValid mirrors validate', () {
@@ -214,7 +222,7 @@ void main() {
     });
 
     test('wrong length returns error', () {
-      expect(IfscValidator.validate('HDFC001234'), isNotNull);   // 10 chars
+      expect(IfscValidator.validate('HDFC001234'), isNotNull); // 10 chars
       expect(IfscValidator.validate('HDFC00012345'), isNotNull); // 12 chars
     });
 
@@ -229,7 +237,8 @@ void main() {
 
     test('getBankName returns known bank', () {
       expect(IfscValidator.getBankName('HDFC0001234'), equals('HDFC Bank'));
-      expect(IfscValidator.getBankName('SBIN0005943'), equals('State Bank of India'));
+      expect(IfscValidator.getBankName('SBIN0005943'),
+          equals('State Bank of India'));
     });
 
     test('getBankCode returns first 4 characters', () {
@@ -261,7 +270,7 @@ void main() {
     });
 
     test('wrong length returns error', () {
-      expect(PincodeValidator.validate('40000'), isNotNull);   // 5 digits
+      expect(PincodeValidator.validate('40000'), isNotNull); // 5 digits
       expect(PincodeValidator.validate('4000011'), isNotNull); // 7 digits
     });
 
@@ -307,7 +316,8 @@ void main() {
     });
 
     test('too short username returns error', () {
-      expect(UpiValidator.validate('ab@okicici'), isNotNull); // username < 3 chars
+      expect(
+          UpiValidator.validate('ab@okicici'), isNotNull); // username < 3 chars
     });
 
     test('isValid mirrors validate', () {
